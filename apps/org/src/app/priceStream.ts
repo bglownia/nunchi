@@ -2,6 +2,7 @@ export type PriceTick = { ts: number; price: number };
 export function createMockPriceStream(opts?: { start?: number }) {
   let price = opts?.start ?? 67000;
   let active = true;
+  let timeout: NodeJS.Timeout;
   const subscribers = new Set<(t: PriceTick) => void>();
 
   const tick = () => {
@@ -10,9 +11,10 @@ export function createMockPriceStream(opts?: { start?: number }) {
     price = Math.max(100, price + drift);
     const msg = { ts: Date.now(), price: Number(price.toFixed(2)) };
     subscribers.forEach((fn) => fn(msg));
+    timeout = setTimeout(tick, 300 + Math.random() * 1000);
   };
 
-  const id = setInterval(tick, 350);
+  tick();
 
   return {
     subscribe(fn: (t: PriceTick) => void) {
@@ -27,7 +29,7 @@ export function createMockPriceStream(opts?: { start?: number }) {
       active = true;
     },
     close() {
-      clearInterval(id as any);
+      clearTimeout(timeout);
       subscribers.clear();
     },
   };

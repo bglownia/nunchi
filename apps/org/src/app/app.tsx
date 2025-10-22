@@ -13,7 +13,7 @@ export function App() {
         <TickerPnLCard
           symbol="BTC-PERP"
           side="short" // "long" | "short"
-          entryPrice={67250} // number
+          entryPrice={68250} // number
           size={70} // number (optional; used if you show PnL $)
         />
       </div>
