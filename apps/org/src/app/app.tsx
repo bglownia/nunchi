@@ -12,9 +12,9 @@ export function App() {
         />
         <TickerPnLCard
           symbol="BTC-PERP"
-          side="long" // "long" | "short"
+          side="short" // "long" | "short"
           entryPrice={67250} // number
-          size={-20} // number (optional; used if you show PnL $)
+          size={70} // number (optional; used if you show PnL $)
         />
       </div>
     </div>
